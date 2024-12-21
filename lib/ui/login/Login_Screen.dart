@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/provider/Auth_Provider.dart' as MyAuthProvider;
 import 'package:todo/database/Users_Dao.dart';
 import 'package:todo/firebase/Firebase_Error_Codes.dart';
+import 'package:todo/provider/Auth_Provider.dart' as MyAuthProvider;
 import 'package:todo/provider/Setting_Provider.dart';
 import 'package:todo/ui/component/Custom_FormField.dart';
 import 'package:todo/ui/home/Home_Screen.dart';
 import 'package:todo/ui/register/Register_Screen.dart';
 import 'package:todo/utils/Dialog_Utils.dart';
 import 'package:todo/utils/validation_utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = 'login';

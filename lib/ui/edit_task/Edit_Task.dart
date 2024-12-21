@@ -1,9 +1,12 @@
+import 'package:cloud_firestore_platform_interface/src/timestamp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/database/model/Task.dart';
+import 'package:todo/provider/Auth_Provider.dart';
 import 'package:todo/provider/Setting_Provider.dart';
 import 'package:todo/ui/component/Custom_FormField.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditTask extends StatefulWidget {
   static const String routeName = 'editTask';
@@ -13,16 +16,23 @@ class EditTask extends StatefulWidget {
 }
 
 class _EditTaskState extends State<EditTask> {
-  TextEditingController taskTitle = TextEditingController();
+  TextEditingController? taskTitle;
 
-  TextEditingController taskDisc = TextEditingController();
+  TextEditingController? taskDisc;
 
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    Task task = ModalRoute.of(context)?.settings.arguments as Task;
     var height = MediaQuery.of(context).size.height;
+    DateTime? time = task.dateTime?.toDate();
     var settingProvider = Provider.of<SettingProvider>(context);
+    var authProvider = Provider.of<AuthProvider>(context);
+    if (taskTitle == null || taskDisc == null) {
+      taskTitle = TextEditingController(text: task.title);
+      taskDisc = TextEditingController(text: task.description);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.title),
@@ -50,7 +60,7 @@ class _EditTaskState extends State<EditTask> {
                   height: height * 0.02,
                 ),
                 CustomFormField(
-                    controller: taskTitle,
+                    controller: taskTitle!,
                     keyboardType: TextInputType.text,
                     label: AppLocalizations.of(context)!.taskTitle,
                     validator: (text) {
@@ -61,7 +71,7 @@ class _EditTaskState extends State<EditTask> {
                       return null;
                     }),
                 CustomFormField(
-                  controller: taskDisc,
+                  controller: taskDisc!,
                   label: AppLocalizations.of(context)!.taskDescription,
                   keyboardType: TextInputType.text,
                   validator: (text) {
@@ -90,11 +100,11 @@ class _EditTaskState extends State<EditTask> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    showTaskDatePicker();
+                    showTaskDatePicker(task, time!);
                   },
                   child: Text(
                       selectedDate == null
-                          ? AppLocalizations.of(context)!.selectedDate
+                          ? "${time?.day}/${time?.month}/${time?.year}"
                           : "${selectedDate?.day}/${selectedDate?.month}/${selectedDate?.year}",
                       style: GoogleFonts.poppins(
                           textStyle: TextStyle(
@@ -118,7 +128,14 @@ class _EditTaskState extends State<EditTask> {
                   height: height * 0.02,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      task.title = taskTitle?.text;
+                      task.description = taskDisc?.text;
+                      authProvider.editTask(task);
+                    }
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.editTaskBtn,
                     style: GoogleFonts.poppins(
@@ -154,15 +171,35 @@ class _EditTaskState extends State<EditTask> {
 
   DateTime? selectedDate;
 
-  void showTaskDatePicker() async {
-    var date = await showDatePicker(
+  void showTaskDatePicker(Task task, DateTime taskTime) {
+    showDatePicker(
       context: context,
-      initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)),
+      initialDate: taskTime,
+      firstDate: taskTime,
+      lastDate: taskTime.add(Duration(days: 365)),
+    ).then(
+      (value) {
+        if (value != null) {
+          Timestamp timestampTime = Timestamp.fromDate(value);
+          task.dateTime = timestampTime;
+        }
+      },
     );
-    selectedDate = date;
     showDateError = false;
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    taskTitle?.dispose();
+    taskDisc?.dispose();
   }
 }

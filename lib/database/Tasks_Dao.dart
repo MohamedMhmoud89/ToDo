@@ -47,7 +47,7 @@ class TasksDao {
     return getTasksCollection(uid).doc(taskId).delete();
   }
 
-  static Future<void> updateTask(String taskId, String uid, Task task) {
-    return getTasksCollection(uid).doc(taskId).update(task.toFireStore());
+  static Future<void> updateTask(String uid, Task task) {
+    return getTasksCollection(uid).doc(task.id).update(task.toFireStore());
   }
 }
