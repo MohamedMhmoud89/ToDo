@@ -24,6 +24,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     var settingProvider = Provider.of<SettingProvider>(context);
+    var authProvider = Provider.of<AuthProvider>(context);
     return Slidable(
       startActionPane: widget.task.isDone
           ? ActionPane(
@@ -78,7 +79,8 @@ class _TaskWidgetState extends State<TaskWidget> {
                 ),
                 SlidableAction(
                   onPressed: (context) {
-                    Navigator.pushNamed(context, EditTask.routeName);
+                    Navigator.pushNamed(context, EditTask.routeName,
+                        arguments: widget.task);
                   },
                   backgroundColor: Colors.blueAccent,
                   foregroundColor: Colors.white,
@@ -179,7 +181,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                     ),
                     onPressed: () {
                       widget.task.isDone = true;
-                      setState(() {});
+                      authProvider.editTask(widget.task);
                     },
                     child: Icon(
                       Icons.check_rounded,

@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/provider/Setting_Provider.dart';
 import 'package:todo/ui/fragment/lists/Lists_Fragment.dart';
 import 'package:todo/ui/fragment/settings/Settings_Fragment.dart';
 import 'package:todo/ui/home/Add_Task_BottomSheet.dart';
 import 'package:todo/ui/login/Login_Screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'home';

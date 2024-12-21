@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:todo/database/Tasks_Dao.dart';
 import 'package:todo/database/model/Task.dart';
 import 'package:todo/provider/Auth_Provider.dart';
+import 'package:todo/provider/Setting_Provider.dart';
 import 'package:todo/ui/component/Custom_FormField.dart';
 import 'package:todo/utils/Dialog_Utils.dart';
 
@@ -24,10 +25,13 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
+    var settingProvider = Provider.of<SettingProvider>(context);
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: settingProvider.currentTheme == ThemeMode.light
+              ? Colors.white
+              : Color(0xff141922),
           borderRadius: new BorderRadius.only(
             topLeft: const Radius.circular(15.0),
             topRight: const Radius.circular(15.0),
@@ -44,6 +48,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     textStyle: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18,
+                  color: settingProvider.currentTheme == ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
                 )),
               ),
               SizedBox(
@@ -80,6 +87,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       textStyle: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
+                    color: settingProvider.currentTheme == ThemeMode.light
+                        ? Colors.black
+                        : Colors.white,
                   ))),
               SizedBox(
                 height: height * 0.02,
@@ -96,6 +106,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         textStyle: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 16,
+                      color: settingProvider.currentTheme == ThemeMode.light
+                          ? Colors.black
+                          : Colors.white,
                     ))),
               ),
               showDateError
