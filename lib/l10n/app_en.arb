@@ -34,5 +34,10 @@
   "yes": "Yes",
   "no": "No",
   "deleteTask": "Are you sure you want to delete the task?",
-  "doneTask": "Done!"
+  "doneTask": "Done!",
+  "wait": "Please wait....",
+  "ok": "ok",
+  "reset": "Reset password",
+  "forget": "Forget password?",
+  "sucsend": "Check your mail to reset password"
 }
