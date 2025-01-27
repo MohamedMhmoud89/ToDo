@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/firebase/firebase_options.dart';
@@ -8,11 +10,10 @@ import 'package:todo/provider/Setting_Provider.dart';
 import 'package:todo/sharedPreferences/SharedPrefs.dart';
 import 'package:todo/ui/edit_task/Edit_Task.dart';
 import 'package:todo/ui/home/Home_Screen.dart';
-import 'package:todo/ui/register/Register_Screen.dart';
 import 'package:todo/ui/login/Login_Screen.dart';
+import 'package:todo/ui/register/Register_Screen.dart';
+import 'package:todo/ui/reset_password/Reset_Password.dart';
 import 'package:todo/ui/splash/Splash_Screen.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/ui/theme/My_Theme.dart';
 
 void main() async {
@@ -48,7 +49,8 @@ class MyApp extends StatelessWidget {
         RegisterScreen.routeName: (_) => RegisterScreen(),
         LoginScreen.routeName: (_) => LoginScreen(),
         HomeScreen.routeName: (_) => HomeScreen(),
-        EditTask.routeName: (_) => EditTask()
+        EditTask.routeName: (_) => EditTask(),
+        ResetPassword.routeName: (_) => ResetPassword()
       },
       initialRoute: SplashScreen.routeName,
       localizationsDelegates: const [

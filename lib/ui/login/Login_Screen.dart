@@ -10,6 +10,7 @@ import 'package:todo/provider/Setting_Provider.dart';
 import 'package:todo/ui/component/Custom_FormField.dart';
 import 'package:todo/ui/home/Home_Screen.dart';
 import 'package:todo/ui/register/Register_Screen.dart';
+import 'package:todo/ui/reset_password/Reset_Password.dart';
 import 'package:todo/utils/Dialog_Utils.dart';
 import 'package:todo/utils/validation_utils.dart';
 
@@ -135,8 +136,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             EdgeInsets.symmetric(horizontal: 34, vertical: 14),
                       ),
                     ),
-                    SizedBox(
-                      height: 20,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, ResetPassword.routeName);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.forget,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color:
+                                settingProvider.currentTheme == ThemeMode.light
+                                    ? Colors.black
+                                    : Colors.white),
+                      ),
                     ),
                     Row(
                       children: [
